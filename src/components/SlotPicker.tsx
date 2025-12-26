@@ -39,7 +39,7 @@ const SlotPicker: React.FC<SlotPickerProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {SLOT_TIMINGS.map((slot, index) => {
           const status = getSlotStatus(turfId, date, index);
           const isSelected = selectedSlot === index;
@@ -50,27 +50,29 @@ const SlotPicker: React.FC<SlotPickerProps> = ({
               key={index}
               variant={isBooked ? 'slotBooked' : isSelected ? 'hero' : 'slot'}
               className={cn(
-                'h-auto py-3 px-4 flex flex-col items-start gap-1 relative',
+                'h-auto py-4 px-4 flex flex-col items-center justify-center gap-2 min-h-[90px]',
                 isSelected && 'ring-2 ring-primary ring-offset-2'
               )}
               disabled={isBooked}
               onClick={() => !isBooked && onSelectSlot(index)}
             >
-              <div className="flex items-center gap-2 w-full">
-                <Clock className="h-4 w-4" />
-                <span className="text-xs font-medium">
-                  {slot.startTime} - {slot.endTime}
+              <div className="flex items-center justify-center gap-2">
+                <Clock className="h-4 w-4 shrink-0" />
+                <span className="text-sm font-semibold whitespace-nowrap">
+                  {slot.startTime}
                 </span>
               </div>
-              <div className="flex items-center justify-between w-full">
-                <span className="text-sm font-bold">₹{pricePerSlot}</span>
+              <span className="text-xs text-muted-foreground">to</span>
+              <span className="text-sm font-semibold">{slot.endTime}</span>
+              <div className="flex items-center justify-center gap-2 pt-1 border-t border-current/10 w-full">
+                <span className="text-base font-bold">₹{pricePerSlot}</span>
                 {isBooked ? (
-                  <span className="flex items-center gap-1 text-xs">
-                    <X className="h-3 w-3" /> Booked
+                  <span className="flex items-center gap-1 text-xs opacity-70">
+                    <X className="h-3 w-3" />
                   </span>
                 ) : isSelected ? (
                   <span className="flex items-center gap-1 text-xs">
-                    <Check className="h-3 w-3" /> Selected
+                    <Check className="h-3 w-3" />
                   </span>
                 ) : null}
               </div>
